@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Luz im web</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name=viewport content="user-scalable=no,width=device-width" />
+  <link rel="stylesheet" href="/css/styles.css" />
+  <link rel="stylesheet" href="https://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.css" />
+  <script src="https://code.jquery.com/jquery-1.8.3.min.js"></script>
+  <script src="https://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.js"></script>
+  <script src="/js/sjcl.js"></script>
+  <script src="js/myjs.js"></script>
+</head>
+
+<body onload="checkKonf()">
+
+  <div data-role=page id=home>
+    <div data-role=header>
+      <h1>Home <span onclick="inputKey();">LD</span></h1>
+    </div>
+
+    <div data-role=content>
+      <h3> Links</h3>
+      <ul data-role=listview>
+        <li><a href=#win6> Suchen </a></li>
+        <li><a href=#win1> news </a></li>
+        <li><a href=#win3> blogs </a></li>
+        <li><a href=#win4> mail &amp; diverses </a></li>
+        <li><a href=#win5> Wandern/Sport </a></li>
+        <li><a href=#win7> Einkaufen </a></li>
+        <li><a href=#win20> Kino/Theater/Bibo </a></li>
+        <li><a href=#win8> Finanzen </a></li>
+        <li><a href=#win9> Interessantes </a></li>
+        <li><a href=#win10> Input </a></li>
+        <li><a href=#win12> Verbrauch </a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div data-role=page id="win1" data-add-back-btn=true>
+    <div data-role=header>
+      <h1>Zeitungen</h1>
+    </div>
+    <div data-role=content>
+      <p>Print &amp; news</p>
+      <ul data-role=listview>
+        <li> <a href="http://freitag.de" target="extern">freitag</a></li>
+        <li> <a href="http://taz.de" target="extern">taz</a> </li>
+        <li> <a href="http://faz.net" target="extern">faz</a> </li>
+        <li> <a href="http://fr-online.de" target="extern">Frankfurter Rundschau</a> </li>
+        <li> <a href="http://www.stuttgarter-zeitung.de/" target="extern">Stuttgarter Zeitung</a></li>
+        <li> <a href="http://www.kornwestheimer-zeitung.de/" target="extern">Kornwestheimer Zeitung</a></li>
+        <li> <a href="http://heise.de" target="extern">heise</a> </li>
+        <li> <a href="http://telepolis.de" target="extern">telepolis</a> </li>
+        <li> <a href="http://omnisophie.com" target="extern">omnisophie</a> </li>
+        <li> <a href="http://www.nachdenkseiten.de" target="extern">nachdenkseiten</a> </li>
+        <li> <a href="http://www.jungewelt.de/" target="extern">junge welt</a> </li>
+        <li> <a href="http://www.neues-deutschland.de/" target="extern">Neues Deutschland</a> </li>
+        <li> <a href="http://jungle-world.com/" target="extern">jungle world</a> </li>
+        <li> <a href="http://www.thetimes.co.uk" target="extern">Times</a> </li>
+        <li> <a href="http://www.theguardian.com/" target="extern">Guardian</a> </li>
+        <li> <a href="http://www.independent.co.uk/" target="extern">Independent</a> </li>
+        <li> <a href="http://time.com/" target="extern">Time</a> </li>
+        <li> <a href="http://www.newsweek.com/" target="extern">Newsweek</a> </li>
+        <li> <a href="http://www.usatoday.com/" target="extern">USA today</a> </li>
+        <li> <a href="http://www.washingtonpost.com/" target="extern">Washington Post</a></li>
+        <li> <a href="http://www.timeslive.co.za/" target="extern">Times Südafrika</a> </li>
+        <li> <a href="http://www.thestar.com/" target="extern">Toronto Star</a> </li>
+        <li> <a href="http://timesofindia.indiatimes.com/" target="extern">Times Indien</a> </li>
+        <li> <a href="http://www.thestatesman.net/" target="extern">Statesman Indien</a> </li>
+        <li> <a href="http://www.canberratimes.com.au/" target="extern">Canberra Times</a> </li>
+        <li> <a href="http://www.deutsch-chinesische-allgemeine.de/" target="extern">Deutsch Chinesische Z.</a> </li>
+        <li> <a href="http://www.chinadaily.com.cn/" target="extern">China daily</a> </li>
+        <li> <a href="http://www.shanghaidaily.com/" target="extern">Shanghai daily</a> </li>
+        <li> <a href="http://www.slow-journalism.com/" target="extern">delayed Gratification</a> </li>
+        <li>
+          <hr />
+        </li>
+        <li> <a href="http://www.kontext-tv.de" target="extern">kontext-tv</a> </li>
+        <li> <a href="http://www.stoersender.tv" target="extern">störsender-tv</a> </li>
+
+      </ul>
+    </div>
+  </div>
+
+  <div data-role=page id="win3" data-add-back-btn=true>
+    <div data-role=header>
+      <h1>Blogs</h1>
+    </div>
+    <div data-role=content>
+      <ul data-role=listview>
+        <li> <a href="http://featurette.de" target="extern">feat</a> </li>
+        <li> <a href="http://www.denkzentrum-demokratie.de" target="extern">Denkzentrum Demokratie</a> </li>
+        <li> <a href="http://www.mehr-demokratie.de/" target="extern">Mehr Demokratie</a> </li>
+        <li> <a href="http://www.oxiblog.de/" target="extern">Wirtschaftsblog Oxi</a> </li>
+        <li> <a href="http://www.wirtschaftsdemokratie.net/" target="extern">www.wirtschaftsdemokratie.net</a> </li>
+      </ul>
+    </div>
+  </div>
+
+  <div data-role=page id="win4" data-add-back-btn=true>
+    <div data-role=header>
+      <h1>Mail &amp; Diverses</h1>
+    </div>
+    <div data-role=content>
+      <ul data-role=listview>
+        <li> <a href="https://webmail.all-inkl.com" target="extern">mail allinkl</a></li>
+        <li> <a href="https://communicator.strato.de/" target="extern">mail strato</a></li>
+        <li> <a href="https://www.gmx.net/" target="extern">gmx mail</a></li>
+        <li> <a href="https://www.web.de/fm" target="extern">web.de mail</a></li>
+        <li> <a href="https://www.hotmail.de/" target="extern">hotmail</a></li>
+        <li> <a href="https://www.mail.de/" target="extern">mail.de</a></li>
+        <li> <a href="https://webmail.1blu.de/" target="extern">mail 1blu</a></li>
+        <li>
+          <hr />
+        </li>
+        <li> <a href="http://www.google.com/ads/preferences/?hl=de" target="extern">google präferenzen</a></li>
+        <li>
+          <hr />
+        </li>
+        <li onclick="showDownloads();"> Downloads </li>
+        <li> ------ </li>
+        <li> <a href="https://www.alditalk-kundenbetreuung.de/de" target="extern">Aldi Talk</a></li>
+        <li> <a href="https://kundenkonto.lidl-connect.de/" target="extern">Lidl connect</a></li>
+      </ul>
+      <div id="dwn">
+      </div>
+    </div>
+  </div>
+
+  <div data-role=page id="win5" data-add-back-btn=true>
+    <div data-role=header>
+      <h1>Wandern</h1>
+    </div>
+    <div data-role=content>
+      <ul data-role=listview>
+        <li> <a href="http://bergfex.at" target="extern">Bergfex</a></li>
+        <li> <a href="http://www.kruemelhuepfer.de" target="extern">Wandern Murrhardt</a></li>
+        <li> <a href="http://www.sueddeutsche.de/thema/Alpen" target="extern">Wandern Alpen</a></li>
+        <li> ------ </li>
+        <li> <a href="http://mapquest.com" target="extern">mapquest</a></li>
+        <li> <a href="http://openstreetmap.de" target="extern">openstreetmap.de/</a></li>
+        <li> ------ </li>
+        <li> <a href="https://www.yamadi-yoga.de" target="extern">Yamadi Yoga</a></li>
+        <li> ------ </li>
+        <li> <a href="https://www.wetterdienst.de" target="extern">Wetterdienst</a></li>
+        <li> <a href="https://kachelmannwetter.com/de/vorhersage/2885408-kornwestheim/kompakt1x1" target="extern">Wetter
+            Kachelmann KWH</a></li>
+        <li> <a href="https://www.wetteronline.de" target="extern">Wetteronline</a></li>
+        <li> ------ </li>
+
+        <li> --- Bus ---- </li>
+        <li> <a href="https://www.v-s-b.de/" target="extern">Schwarzwald Baar Kreis</a></li>
+        <li> <a href="https://m.v-s-b.de/de/fahrplaene/ortschaften/25/" target="extern">K&ouml;nigsfeld</a></li>
+        <li> <a href="https://fahrplan-bus-bahn.de/" target="extern">Fahrpl&auml;ne Deutschland</a></li>
+        <li> <a
+            href="https://fahrplan-bus-bahn.de/baden-wuerttemberg/koenigsfeld/haltestelle/freibad_knigsfeld_im_schwarzwald-5008426?date#/"
+            target="extern">Fahrpl&auml;ne K&ouml;nigsfeld</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div data-role=page id=win6 data-add-back-btn=true>
+    <div data-role=header>
+      <h1>Suchen</h1>
+    </div>
+    <div data-role=content>
+      <ul data-role=listview>
+        <li> <a href="https://startpage.com" target="extern">startpage ++</a></li>
+        <li> <a href="https://duckduckgo.com" target="extern">duckduckgo +</a> </li>
+        <li> <a href="https://neeva.com" target="extern">neeva ai</a> </li>
+        <li> <a href="https://wikipedia.de" target="extern">wikipedia +++</a> </li>
+        <li> <a href="https://de.qwant.com/" target="extern">qwant ++</a> </li>
+        <li> <a href="https://www.fastbot.de/" target="extern">fastbot ++</a> </li>
+        <li> <a href="http://www.findsounds.com/" target="extern">findsounds ?</a> </li>
+        <li> <a href="https://ixquick.com/deu/" target="extern">ixquick +</a> </li>
+        <li> <a href="http://www.socialmention.com/#" target="extern">socialmention ?</a> </li>
+        <li> <a href="https://www.ecosia.org" target="extern">ecosia ++</a> </li>
+        <li> <a href="http://www.lixam.de/#" target="extern">lixam</a> </li>
+        <li>-----------------------------------------</li>
+        <li> <a href="http://suchmaschinen-liste.org/">Liste mit Suchmaschinen</a> </li>
+        <li>SPRACHEN-----------------------------------</li>
+        <li> <a href="https://deepl.com/" target="extern">Übersetzungsdienst deepl</a> </li>
+        <li> <a href="https://leo.org/">Übersetzungsdienst leo</a> </li>
+        <li> <a href="https://www.macmillandictionary.com/" target="extern">dictionary mac millan</a></li>
+        <li> <a href="https://dictionary.cambridge.org" target="extern">dictionary cambridge</a> </li>
+        <li> <a href="https://www.collinsdictionary.com/dictionary" target="extern">dictionary collins</a> </li>
+        <li> <a href="https://www.merriam-webster.com/" target="extern">englischer Wortschatz</a> </li>
+        <li>Deutsch-Synonyme----------------------------------</li>
+        <li> <a href="https://www.openthesaurus.de/" target="extern">englischer Wortschatz</a> </li>
+      </ul>
+    </div>
+  </div>
+
+  <div data-role=page id="win7" data-add-back-btn=true>
+    <div data-role=header>
+      <h1>Einkaufen</h1>
+    </div>
+    <div data-role=content>
+      <ul data-role=listview>
+        <li> <a href="https://www.buechergilde.de/mitglieder.html" target="extern">Büchergilde</a></li>
+        <li> <a href="https://hood.de" target="extern">hood.de</a> </li>
+        <li> <a href="https://quoka.de" target="extern">quoka</a> </li>
+        <li> <a href="https://booklooker.de" target="extern">booklooker</a> </li>
+        <li> <a href="https://www.ebay.de" target="extern">ebay</a> </li>
+        <li> <a href="https://www.ebay-kleinanzeigen.de" target="extern">ebay kleinanzeigen</a> </li>
+        <li> <a href="https://www.buecherlurch.de/" target="extern">B&uuml;cher Lurch</a> </li>
+        <li> <a href="https://modeopfer110.de" target="extern">modeopfer</a> </li>
+        <li> <a href="https://fairmondo.de" target="extern">fairmondo</a> </li>
+        <li> <a href="https://conrad.de" target="extern">conrad</a> </li>
+        <li> <a href="https://www.kartoffel-mueller.d" target="extern">Alte Kartoffeln</a> </li>
+      </ul>
+    </div>
+  </div>
+
+  <div data-role=page id="win8" data-add-back-btn=true>
+    <div data-role=header>
+      <h1>Finanzen</h1>
+    </div>
+    <div data-role=content>
+      <ul data-role=listview>
+        <li><a href="https://www.commerzbank.de/" target="extern">Commerzbank</a> </li>
+        <li><a href="https://www.allianz.de" target="extern">Allianz</a> </li>
+        <li><a href="https://www.dab-bank.de/meinedabbank/login.app.html" target="extern">DAB Depot</a> </li>
+        <li><a href="https://www.vrbank-lb.de" target="extern">VR Lubu</a> </li>
+        <li>-------------HAUS----------</li>
+        <li><a href="https://www.swlb.de" target="extern">SWLB</a> </li>
+        <li><a href="https://www.lichtblick.de/" target="extern">Lichtblick</a> </li>
+      </ul>
+    </div>
+  </div>
+
+  <div data-role=page id="win9" data-add-back-btn=true>
+    <div data-role=header>
+      <h1>Interessantes</h1>
+    </div>
+    <div data-role=content>
+      <ul data-role=listview>
+        <li><a href="http://www.resilience.org/author-detail/1151470-david-korowicz" target="extern">resilience.org</a>
+        </li>
+        <li><a href="http://www.stoersender.tv" target="extern">Kabarett st&ouml;rsender</a> </li>
+        <li><a href="http://www.change.org" target="extern">Change.org</a> </li>
+        <li><a href="http://www.avaaz.org" target="extern">avaaz</a> </li>
+        <li><a href="http://www.openpetition.de" target="extern">openpetition</a> </li>
+        <li><a href="http://www.discographien.de" target="extern">Diskographien</a> </li>
+        <li><a href="https://udemy.com" target="extern">Udemy lernen</a> </li>
+
+      </ul>
+    </div>
+  </div>
+
+  <div data-role=page id="win10" data-add-back-btn=true>
+    <div data-role=header>
+      <h1>Input</h1>
+    </div>
+    <div data-role=content>
+      <div id="ajaxErg"></div>
+      <form id="sendInput" action="#">
+        <div data-role="fieldcontain">
+          <label for="table">
+            Typ:
+          </label>
+          <select id="table" name="table" onchange="getdata(this.value);">
+            <option value="zitat">Zitat</option>
+            <option value="buch">Buch</option>
+            <option value="link">Link</option>
+            <option value="link2">Link Nina</option>
+            <option value="notiz">Notizen</option>
+            <option value="snippet">Snippets</option>
+            <option value="chat">Chat</option>
+          </select>
+        </div>
+        <div data-role="fieldcontain">
+          <label title="Chat:target" for="desc">Beschreibung / ISBN (Notizenkopf)</label>
+          <input name="desc" id="desc" placeholder="Kurzbeschreibung" value="" type="text">
+        </div>
+        <div data-role="fieldcontain">
+          <label title="Link oder Inhalt" for="inhalt">Inhalt</label>
+          <textarea name="inhalt" id="inhalt" placeholder=""></textarea>
+        </div>
+        <div data-role="fieldcontain">
+          <label title="Seite oder Partner" for="seite">Seite (Notizenbereich)</label>
+          <input name="seite" id="seite" placeholder="0" value="0">
+        </div>
+        <input value="Senden" type="button" id="sendButton" title="In DB speichern" />
+        <input value="L&ouml;schen" type="button" id="clearButton" title="Felder l&ouml;schen" />
+        <div id="DBinhalt"></div>
+      </form>
+    </div>
+  </div>
+
+  <div data-role=page id="win12" data-add-back-btn=true>
+    <div data-role=header>
+      <h1>Verbrauch</h1>
+    </div>
+    <div data-role=content>
+      <div id="ajaxVerbr"></div>
+      <form id="sendVerbr" action="#">
+        <div data-role="fieldcontain">
+          <label for="verbr">Verbrauch in l</label>
+          <input name="verbr" id="verbr" placeholder="0" value="0">
+        </div>
+        <div data-role="fieldcontain">
+          <label for="km">Kilometer</label>
+          <input name="km" id="km" placeholder="0" value="0">
+        </div>
+        <input value="Speichern" type="button" id="sendVerbr" title="In DB speichern" />
+        <div id="ergVerbr"></div>
+      </form>
+    </div>
+  </div>
+
+  <div data-role=page id="win15" data-add-back-btn=true>
+    <div data-role=header>
+      <h1>Dev</h1>
+    </div>
+    <div data-role=content>
+      <ul data-role=listview>
+        <li><a href="https://github.com/" target="extern">Github</a> </li>
+
+      </ul>
+    </div>
+  </div>
+
+  <div data-role=page id="win20" data-add-back-btn=true>
+    <div data-role=header>
+      <h1> Kino / Theater / Museen </h1>
+    </div>
+    <div data-role=content>
+      <ul data-role=listview>
+        <li> <a href="http://www.kinokult.de" target="extern">Kinokult</a> </li>
+        <li> <a href="http://www.central-union.de" target="extern">Kino Lubu</a> </li>
+        <li> <a href="http://www.capitol-kornwestheim.de/" target="extern">Kino Kornwestheim</a> </li>
+        <li> <a href="http://www.innenstadtkinos.de" target="extern">Innenstadt Kino Stuttgart</a> </li>
+        <li> <a href="http://www.ufastuttgart.de/ufa-kino-stuttgart.html" target="extern">UFA Stuttgart</a> </li>
+        <li> <a href="http://www.cinemaxx.de/Programm/AktuellesProgramm?switchCinemaId=77" target="extern">cinemaxx
+            Stuttgart</a> </li>
+        <li> <a href="http://www.arthaus-kino.de/" target="extern">Arthaus Kino Stuttgart</a> </li>
+        <li> <a href="http://www.koki-es.de/" target="extern">Kommunales Kino Esslingen</a> </li>
+        <li> <a href="https://www.kinoprogramm.com" target="extern">Kinoprogramm allgemein</a> </li>
+        <li> <a href="https://www.cinema.de" target="extern">Filme Übersicht</a> </li>
+        <li>
+          <hr />
+        </li>
+        <li> <a href="http://www.theater-stuttgart.net/" target="extern">Theater Stuttgart</a> </li>
+        <li>
+          <hr />
+        </li>
+        <li> <a href="https://opac.sbs.stuttgart.de/aDISWeb/" target="extern">bibo Stuttgart</a> </li>
+        <li> <a href="http://www.stabi-ludwigsburg.de/start" target="extern">bibo Lubu</a> </li>
+        <li> <a href="https://biber-kwh.kdrs.de/opax/de/login.html.S" target="extern">bibo Kheim</a> </li>
+        <li> <a href="http://www.wlb-stuttgart.de/" target="extern">Landesbibliothek</a> </li>
+        <li>
+          <hr />
+        </li>
+        <li> <a href="https://britishmuseum.org/collection" target="extern">Britisches Museum</a> </li>
+        <li> <a href="https://arkadia.xyz" target="extern">Arkadia Zoom</a> </li>
+        <li> <a href="https://zoomquilt2.com" target="extern">Zoomquilt 2</a> </li>
+        <li> <a href="https://infinitezoom.net" target="extern">infinitezoom</a> </li>
+      </ul>
+    </div>
+  </div>
+  <script>
+    $("#sendButton").click(function (event) {
+      if (localStorage['mypw'] === undefined) {
+        alert('Passwort fehlt !');
+        return;
+      }
+      var $form = $(this),
+        url = '/localphp/save.php?auth=';
+      url += localStorage['mypw'] + '//' + localStorage['myuser'];
+      var posting = $.post(url, $("#sendInput").serialize());
+      posting.done(function (data) {
+        $("#ajaxErg").html(data);
+      });
+    });
+    $("#sendVerbr").click(function (event) {
+      var $form = $(this),
+        url = '/localphp/saveVerbr.php';
+      var posting = $.post(url, $("#sendVerbr").serialize());
+      posting.done(function (data) {
+        $("#ajaxVerbr").html(data);
+      });
+    });
+
+    $("#clearButton").click(function (event) {
+      if (localStorage["mypw"] == null) {
+        localStorage["myuser"] = $("#desc").attr('value');
+        localStorage["mypw"] = sjcl.hash.sha256.hash($("#inhalt").attr('value'));
+        console.log('Passwort gesetzt: ' + localStorage["mypw"]);
+      }
+      $("#desc").attr('value', '');
+      $("#inhalt").attr('value', '');
+      $("#inhalt").css('height', '48px');
+    });
+
+
+    function getdata(t) {
+      if (localStorage['mypw'] === undefined) {
+        alert('Passwort fehlt !');
+        return;
+      }
+      url = '/localphp/show.php?table=' + t + '&auth=';
+      url += localStorage['mypw'] + '//' + localStorage['myuser'];
+
+      if (t === 'buch') {
+        var posting = $.getJSON(url,showBooks);
+      }
+      else {
+        var posting = $.get(url);
+        posting.done(function (data) {
+          $("#DBinhalt").html(data);
+        });
+      }
+    }
+
+    function showDownloads() {
+      var datum = new Date();
+      var message = datum.getDate();
+      if (message < 10) {
+        message = "LUZ0" + message;
+      }
+      else {
+        message = "LUZ" + message;
+      }
+      var key = sjcl.hash.sha256.hash(message);
+      var keyhex = sjcl.codec.hex.fromBits(key);
+      var url = '/localphp/show.php?downloads=' + keyhex;
+      var posting = $.get(url);
+      alert(message);
+      posting.done(function (data) {
+        alert(data)
+        $("#dwn").html(data);
+      });
+    }
+
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,18 @@
+/* CSS Document */
+
+textarea {
+  width: 60%;
+}
+
+.chatfrom {
+  color: red;
+  text-decoration: underline;
+  font-size: smaller;
+  font-weight: 200;
+}
+
+.chat {
+  color: aqua;
+  font-size:medium;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
