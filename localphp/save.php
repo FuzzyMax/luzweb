@@ -1,6 +1,6 @@
 <?php
-//$path = $_SERVER['DOCUMENT_ROOT'] . '/phpincl/';
-//set_include_path(get_include_path() . PATH_SEPARATOR . $path);
+$path = $_SERVER['DOCUMENT_ROOT'] . '/in/';
+set_include_path(get_include_path() . PATH_SEPARATOR . $path);
 ini_set('display_errors', '1');
 $tables = array(
 	'buch' => 'books', 'zitat' => 'zitate', 'link' => 'merkzettel',
@@ -32,7 +32,8 @@ else {
 
 switch ($table) {
     case 'books':
-        insertBook($desc, $inh);
+        $erg = insertBook($desc, $inh);
+        die($erg);
         break;
     case 'zitate':
         insertZitat($desc, $inh, $seite);
@@ -65,7 +66,7 @@ echo 'OK ' . $table;
 
 function insertBook($d, $i)
 {
-    $d = str_replace('-', '', $d);
+    $d = str_replace('-', '', $d); //ISBN ?
     $sql = "INSERT INTO books 
             (b_author, b_titel, b_verlag, b_isbn, b_bemerk, b_link)
             VALUES (?, ?, ?, ?, ?, ?);";
@@ -85,7 +86,15 @@ function insertBook($d, $i)
     } else {
         $data = array( $d, $i, '', '', '', '' );
     }
-    $GLOBALS['u']->dbIns($sql, $data, false);
+    $erg = $GLOBALS['u']->dbIns($sql, $data, false);
+    if ($erg === false) {
+        die('Problem occured !');
+    }
+    else {
+        $data['b_id'] = $erg;
+        $data['entityName'] = 'book';
+        return json_encode($data);
+    }
 }
 
 function getBookFromGoogle($isbn)
@@ -189,6 +198,16 @@ function insertMerkzettel($d, $i)
 function insertNina($d, $i, $s)
 {
     $data = array(
+        'n_short' => $d,
+        'n_txt'   => $i,
+        'n_hash'  => $s,
+    );
+    require_once('entity.db.php');
+    $e = new entity($GLOBALS['u'], 'nina');
+    $result = $e->insert($data);
+    return;
+
+    $data = array(
         $d,
         $i,
         $s,
@@ -202,17 +221,20 @@ function insertNina($d, $i, $s)
 }
 
 
-function insertChat($from, $content, $to = 'ALL' )
+function insertChat($from, $content, $to )
 {
+    if ($to < ' ') {
+        $to = 'all';
+    }
     $data = array(
-        $from,
-        $content,
-        $to,
+        'creator_nic' => $from,
+        'content'     => $content,
+        'target'      => $to,
     );
-    try {
-        $sql = "INSERT INTO chat (creator_nic, content, target) VALUES (?, ?, ?);";
-        $GLOBALS['u']->dbIns($sql, $data, false);
-    } catch (Exception $e) {
-        echo $e->getMessage();
+    require_once('entity.db.php');
+    $e = new entity($GLOBALS['u'], 'chat');
+    $result = $e->insert($data);
+    if ($result !== false) {
+    #    $result = $e->update_byID($data, $result);
     }
 }

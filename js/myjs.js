@@ -57,15 +57,21 @@ function checkKonf() {
   }
 }
 
-function showBooks(data) {
+function showSnippets(data) {
   console.log(data.length);
   $("#DBinhalt").html('');
 
   for (let index = 0; index < data.length; index++) {
     const element = data[index];
-    $("#DBinhalt").append(element.b_author + " - " + element.b_titel);
-    $("#DBinhalt").append('<br>' + element.b_bemerk + '<br>');
-    $("#DBinhalt").append(element.b_isbn);
-    $("#DBinhalt").append('<hr/>');
+    addSnippet(element);
+    if (index == 1) {
+      alert(element.s_id);
+    }
   }
+}
+
+function addSnippet(elem) {
+  $("#DBinhalt").append("<strong>" + elem.s_descr + "</strong><br>");
+  $("#DBinhalt").append("<textarea onchange='chgsnippet(\"" + elem.s_id + "\", this.value);'>" + elem.s_inhalt);
+  $("#DBinhalt").append("</textarea><br>");
 }

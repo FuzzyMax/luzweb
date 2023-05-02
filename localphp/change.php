@@ -34,12 +34,15 @@ switch ($table) {
     #setBook($desc,$inh);
     break;
   case 'zitate':
+    $txt = trim(strip_tags($_POST['txt']));
     setZitat($id, $txt);
     break;
   case 'merkzettel':
+    $txt = trim(strip_tags($_POST['txt']));
     setMerkzettel($id, $txt);
     break;
   case 'nina':
+    $txt = trim(strip_tags($_POST['txt']));
     setNina($id, $txt);
     break;
   case 'notizen':

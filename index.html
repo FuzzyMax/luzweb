@@ -15,7 +15,7 @@
 
 <body onload="checkKonf()">
 
-  <div data-role=page id=home>
+  <div data-role=page id="home">
     <div data-role=header>
       <h1>Home <span onclick="inputKey();">LD</span></h1>
     </div>
@@ -161,7 +161,7 @@
     </div>
   </div>
 
-  <div data-role=page id=win6 data-add-back-btn=true>
+  <div data-role=page id="win6" data-add-back-btn=true>
     <div data-role=header>
       <h1>Suchen</h1>
     </div>
@@ -361,6 +361,7 @@
       </ul>
     </div>
   </div>
+  <script src="js/myjs2.js"></script>
   <script>
     $("#sendButton").click(function (event) {
       if (localStorage['mypw'] === undefined) {
@@ -371,8 +372,16 @@
         url = '/localphp/save.php?auth=';
       url += localStorage['mypw'] + '//' + localStorage['myuser'];
       var posting = $.post(url, $("#sendInput").serialize());
+      console.log(posting);
       posting.done(function (data) {
-        $("#ajaxErg").html(data);
+        if (data.startsWith("OK")) {
+          $("#ajaxErg").html(data);
+        }
+        else {
+          newData = JSON.parse(data);
+          console.log(newData);
+          prependBook(newData);
+        }
       });
     });
     $("#sendVerbr").click(function (event) {
@@ -405,7 +414,11 @@
       url += localStorage['mypw'] + '//' + localStorage['myuser'];
 
       if (t === 'buch') {
+        // using fetch API ??
         var posting = $.getJSON(url,showBooks);
+      }
+      else if (t === 'snippet') {
+        var posting = $.getJSON(url,showSnippets);
       }
       else {
         var posting = $.get(url);

@@ -1,4 +1,7 @@
 <?php
+ini_set('session.cookie_secure', "1");
+ini_set('session.cookie_httponly', "1");
+ini_set('session.cookie_samesite','None');
 define('PROGNAME','LUZWEB');
 define('DOCROOT',$_SERVER['DOCUMENT_ROOT']);
 define('INCL',DOCROOT.DIRECTORY_SEPARATOR.'in'.DIRECTORY_SEPARATOR);

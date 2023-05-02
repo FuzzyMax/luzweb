@@ -22,11 +22,17 @@ $db['pw'] = 'mysql1234TEST';
 $dsn = 'mysql:host='.$db['host'].';port='.$db['port'].';dbname='.$db['dbname'];
 $options = array(
     PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8',
+    PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION,
 ); 
+try {
+    $db['conn'] = new PDO($dsn, $db['user'], $db['pw'], $options);
+} catch (PDOException $e) {
+    echo 'System ERROR. Try later!';
+    error_log($e->getMessage());
+    exit;
+}
 
-$db['conn'] = new PDO($dsn, $db['user'], $db['pw'], $options);
-
-$db['conn']->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+#$db['conn']->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 $_INI['db'] = $db;
 

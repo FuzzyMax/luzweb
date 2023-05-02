@@ -7,6 +7,12 @@ trait Sql {
      * @var array
      */
     protected $prepStmt = array();
+
+    /**
+     * Primary key aus letztem Aufruf von dbFieldnames.
+     * @var string
+     */
+    public $last_pkey = '';
     
     /**
      * 	db-Methode für Select-Abfragen.
@@ -276,6 +282,9 @@ trait Sql {
             $sql = 'describe '.$table;
             $rslt = $this->dbSel($sql);
             for ($i = 0; $i < count($rslt); $i++) {
+                if ($rslt[$i]->Key === 'PRI') {
+                    $this->last_pkey = $rslt[$i]->Field;
+                }
                 $list[] = $rslt[$i]->Field;
             }
             return $list;

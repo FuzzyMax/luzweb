@@ -1,10 +1,7 @@
 <?php
-$path = $_SERVER['DOCUMENT_ROOT'] . '/phpincl/';
+$path = $_SERVER['DOCUMENT_ROOT'] . '/in/';
 set_include_path(get_include_path() . PATH_SEPARATOR . $path);
 ini_set('display_errors', '1');
-ini_set('session.cookie_secure', "1");
-ini_set('session.cookie_httponly', "1");
-ini_set('session.cookie_samesite','None');
 $tables = array(
 	'buch' => 'books', 'zitat' => 'zitate', 'link' => 'merkzettel',
 	'link2' => 'nina', 'notiz' => 'notizen', 'snippet' => 'snippets',
@@ -131,6 +128,8 @@ function showSnippet()
 {
     $sql = 'SELECT * FROM snippets ORDER BY s_id DESC;';
     $result = $GLOBALS['u']->dbSelArray($sql);
+    echo json_encode($result);
+    return;
     foreach ($result as $res) {
         echo "<strong>{$res['s_descr']}<strong><br><textarea onchange='chgsnippet(\"{$res['s_id']}\",this.value);'>{$res['s_inhalt']}</textarea><br>";
     }
@@ -147,10 +146,13 @@ function showNotiz()
 
 function showChat($nic)
 {
-    $sql = "SELECT * FROM chat 
-            WHERE target = 'ALL' OR target LIKE '%{$nic}%'
-            ORDER BY id DESC";
-    $result = $GLOBALS['u']->dbSelArray($sql);
+    require_once('entity.db.php');
+    $e = new entity($GLOBALS['u'], 'chat');
+    $e->set_fieldlist(array('creator_nic','content'));
+    $where = " target = 'all' or target = '$nic' ";
+    $e->set_orderby('id');
+    $result = $e->get_list($where);
+
     echo '<div>';
     foreach ($result as $res) {
         echo "<div class='chatfrom'>{$res['creator_nic']} :</div><div class='chat'>{$res['content']}</div>";
