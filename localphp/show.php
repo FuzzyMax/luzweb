@@ -129,10 +129,6 @@ function showSnippet()
     $sql = 'SELECT * FROM snippets ORDER BY s_id DESC;';
     $result = $GLOBALS['u']->dbSelArray($sql);
     echo json_encode($result);
-    return;
-    foreach ($result as $res) {
-        echo "<strong>{$res['s_descr']}<strong><br><textarea onchange='chgsnippet(\"{$res['s_id']}\",this.value);'>{$res['s_inhalt']}</textarea><br>";
-    }
 }
 
 function showNotiz()

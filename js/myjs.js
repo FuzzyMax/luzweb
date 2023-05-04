@@ -58,20 +58,10 @@ function checkKonf() {
 }
 
 function showSnippets(data) {
-  console.log(data.length);
+  console.log(data.length + " snippets wurden gefunden.");
   $("#DBinhalt").html('');
-
   for (let index = 0; index < data.length; index++) {
     const element = data[index];
     addSnippet(element);
-    if (index == 1) {
-      alert(element.s_id);
-    }
   }
-}
-
-function addSnippet(elem) {
-  $("#DBinhalt").append("<strong>" + elem.s_descr + "</strong><br>");
-  $("#DBinhalt").append("<textarea onchange='chgsnippet(\"" + elem.s_id + "\", this.value);'>" + elem.s_inhalt);
-  $("#DBinhalt").append("</textarea><br>");
 }

@@ -45,7 +45,8 @@ switch ($table) {
         insertNina($desc, $inh, $seite);
         break;
     case 'snippets':
-        insertSnippet($desc, $inh);
+        $erg = insertSnippet($desc, $inh);
+        die($erg);
         break;
     case 'notizen':
         $seite = trim(substr($_POST['seite'], 0, 32));
@@ -166,7 +167,15 @@ function insertSnippet($d, $i)
     );
 
     $sql = "INSERT INTO snippets (s_descr, s_inhalt) VALUES (?, ?);";
-    $GLOBALS['u']->dbIns($sql, $data, false);
+    $erg = $GLOBALS['u']->dbIns($sql, $data, false);
+    if ($erg === false) {
+        die('Problem occured !');
+    }
+    else {
+        $data['s_id'] = $erg;
+        $data['entityName'] = 'snippet';
+        return json_encode($data);
+    }
 }
 
 function insertNotiz($b, $h, $i)

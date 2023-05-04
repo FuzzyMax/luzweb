@@ -122,5 +122,10 @@ class entity {
         $sql = "UPDATE {$this->table} SET $fieldlist WHERE {$this->id_field} = $id;";
         return $this->user->dbUpdate($sql, $data, false);
     }
+
+    public function delete_byID (int $id) {
+        $sql = "DELETE FROM {$this->table} WHERE {$this->id_field} = '$id';";
+        return $this->user->dbDel($sql);
+    }
     
 }

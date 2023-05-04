@@ -380,7 +380,9 @@
         else {
           newData = JSON.parse(data);
           console.log(newData);
-          prependBook(newData);
+          var funcname = "prepend_"+newData.entityName;
+          myFunc = window[funcname];
+          myFunc(newData);
         }
       });
     });
@@ -415,10 +417,10 @@
 
       if (t === 'buch') {
         // using fetch API ??
-        var posting = $.getJSON(url,showBooks);
+        loadBooks(url);
       }
       else if (t === 'snippet') {
-        var posting = $.getJSON(url,showSnippets);
+        loadSnippets(url);  //Laden über fetch !!
       }
       else {
         var posting = $.get(url);

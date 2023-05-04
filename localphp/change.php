@@ -31,7 +31,8 @@ if ($id < 1) {
 
 switch ($table) {
   case 'books':
-    #setBook($desc,$inh);
+    $txt = trim(strip_tags($_POST['txt']));
+    setBook($txt, $id);
     break;
   case 'zitate':
     $txt = trim(strip_tags($_POST['txt']));
@@ -60,9 +61,22 @@ switch ($table) {
 echo 'changeOK ' . $table . $id;
 
 
-function setBook($d, $i)
+function setBook($d, $id)
 {
   global $u;
+  if (strlen($d) < 4) {
+    return;
+  }
+  $data = array(
+    $d,
+    $id
+  );
+  $sql = "UPDATE books SET b_bemerk = ? WHERE b_id = ?;";
+  try {
+    $u->dbUpdate($sql, $data);
+  } catch (Exception $e) {
+    echo $e->getMessage();
+  }
 }
 
 function setZitat($id, $txt)
@@ -116,8 +130,8 @@ function setNina($id, $txt)
 function setSnippet($id, $txt)
 {
   global $u;
-  if (strlen($txt) < 4) {
-    return;
+  if (strlen($txt) < 3) {
+    die("NIX GMACHT !!");
   }
   $data = array(
     $txt,
@@ -136,7 +150,7 @@ function setNotiz($id, $txt)
 {
   global $u;
   if (strlen($txt) < 4) {
-    return;
+    die("NIX GMACHT !!");
   }
   $data = array(
     $txt,
