@@ -19,16 +19,24 @@ if (!$auth) {
     die('NO DATA AVAILABLE !');
 }
 
-$table = trim(strip_tags($_POST['table']));
-$table = $tables[$table];
-$desc = trim(strip_tags($_POST['desc']));
-$inh = trim(strip_tags($_POST['inhalt']));
-if (isset($_POST['seite'])) {
-    $seite = trim(substr($_POST['seite'], 0, 14));
+$entityBody = file_get_contents('php://input');
+$jsonData = json_decode($entityBody);
+
+if ($jsonData->table) {
+    $table = trim(strip_tags($jsonData->table));
+    $desc = trim(strip_tags($jsonData->desc));
+    $inh = trim(strip_tags($jsonData->inhalt));
+    $seite = trim(strip_tags($jsonData->seite));
 }
 else {
-    $seite = '';
+    $table = trim(strip_tags($_POST['table']));
+    $desc = trim(strip_tags($_POST['desc']));
+    $inh = trim(strip_tags($_POST['inhalt']));
+    if (isset($_POST['seite'])) {
+        $seite = trim(substr($_POST['seite'], 0, 14));
+    }
 }
+$table = $tables[$table];
 
 switch ($table) {
     case 'books':
@@ -39,24 +47,27 @@ switch ($table) {
         insertZitat($desc, $inh, $seite);
         break;
     case 'merkzettel':
-        insertMerkzettel($desc, $inh);
+        $erg = insertMerkzettel($desc, $inh);
+        die($erg);
         break;
     case 'nina':
-        insertNina($desc, $inh, $seite);
+        $erg = insertNina($desc, $inh, $seite);
+        die($erg);
         break;
     case 'snippets':
         $erg = insertSnippet($desc, $inh);
         die($erg);
         break;
     case 'notizen':
-        $seite = trim(substr($_POST['seite'], 0, 32));
         if ($seite < ' ') {
             $seite = 'Allgemeines';
         }
-        insertNotiz($seite, $desc, $inh);
+        $erg = insertNotiz($seite, $desc, $inh, $nic);
+        die($erg);
         break;
     case 'chat':
-            insertChat($nic, $inh, $desc);
+            $erg = insertChat($nic, $inh, $desc);
+            die($erg);
             break;
     default:
         echo '??Unknown table ' . $table;
@@ -178,16 +189,27 @@ function insertSnippet($d, $i)
     }
 }
 
-function insertNotiz($b, $h, $i)
+function insertNotiz($b, $h, $i, $nic)
 {
     $data = array(
         $b,
         $h,
         $i,
+        $nic,
     );
 
-    $sql = "INSERT INTO notizen (notiz_bereich, notiz_kopf, notiz_inhalt) VALUES (?, ?, ?);";
-    $GLOBALS['u']->dbIns($sql, $data, false);
+    $sql = "INSERT INTO notizen (notiz_bereich, notiz_kopf, notiz_inhalt, nic) VALUES (?, ?, ?, ?);";
+    $erg = $GLOBALS['u']->dbIns($sql, $data, false);
+    if ($erg === false) {
+        die('Problem occured !');
+    }
+    else {
+        $data['notiz_id'] = $erg;
+        $data['notiz_kopf'] = $h;
+        $data['notiz_inhalt'] = $i;
+        $data['entityName'] = 'notiz';
+        return json_encode($data);
+    }
 }
 
 function insertMerkzettel($d, $i)
@@ -198,7 +220,17 @@ function insertMerkzettel($d, $i)
     );
     try {
         $sql = "INSERT INTO merkzettel (mz_short, mz_txt) VALUES (?, ?);";
-        $GLOBALS['u']->dbIns($sql, $data, false);
+        $erg = $GLOBALS['u']->dbIns($sql, $data, false);
+        if ($erg === false) {
+            die('Problem occured !');
+        }
+        else {
+            $data['mz_id'] = $erg;
+            $data['mz_short'] = $d;
+            $data['mz_txt'] = $i;
+            $data['entityName'] = 'link';
+            return json_encode($data);
+        }
     } catch (Exception $e) {
         echo $e->getMessage();
     }
@@ -213,7 +245,17 @@ function insertNina($d, $i, $s)
     );
     require_once('entity.db.php');
     $e = new entity($GLOBALS['u'], 'nina');
-    $result = $e->insert($data);
+    $erg = $e->insert($data);
+    if ($erg === false) {
+        die('Problem occured !');
+    }
+    else {
+        $data['n_id'] = $erg;
+        $data['n_short'] = $d;
+        $data['n_txt'] = $i;
+        $data['entityName'] = 'link2';
+        return json_encode($data);
+    }
     return;
 
     $data = array(
@@ -243,7 +285,15 @@ function insertChat($from, $content, $to )
     require_once('entity.db.php');
     $e = new entity($GLOBALS['u'], 'chat');
     $result = $e->insert($data);
-    if ($result !== false) {
-    #    $result = $e->update_byID($data, $result);
+    if ($result === false) {
+        die('Problem occured chat!');
+    }
+    else {
+        $data['id'] = $result;
+        $data['content'] = $content;
+        $data['target'] = $to;
+        $data['creator_nic'] = $from;
+        $data['entityName'] = 'chat';
+        return json_encode($data);
     }
 }

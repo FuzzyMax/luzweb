@@ -124,7 +124,8 @@ class entity {
     }
 
     public function delete_byID (int $id) {
-        $sql = "DELETE FROM {$this->table} WHERE {$this->id_field} = '$id';";
+        //$sql = "DELETE FROM {$this->table} WHERE {$this->id_field} = '$id';";
+        $sql = "UPDATE {$this->table} SET deleted = true WHERE {$this->id_field} = $id;";
         return $this->user->dbDel($sql);
     }
     

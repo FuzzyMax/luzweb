@@ -363,26 +363,45 @@
   </div>
   <script src="js/myjs2.js"></script>
   <script>
+    //Neuen Eintrag an API senden bei Click auf den Send-Button
     $("#sendButton").click(function (event) {
       if (localStorage['mypw'] === undefined) {
         alert('Passwort fehlt !');
         return;
       }
-      var $form = $(this),
-        url = '/localphp/save.php?auth=';
+      //passende URL der API aufbauen
+      var url = '/localphp/save.php?auth=';
       url += localStorage['mypw'] + '//' + localStorage['myuser'];
-      var posting = $.post(url, $("#sendInput").serialize());
-      console.log(posting);
+      //Formulardaten als JSON holen
+      var form = document.getElementById('sendInput');
+      formData= new FormData(form);
+      myForm = JSON.stringify(Object.fromEntries(formData));
+      //Ajax Aufruf der API
+      var posting = $.post(url, myForm);
       posting.done(function (data) {
         if (data.startsWith("OK")) {
+          //API sendet nur Erfolgsmeldung
+          $("#ajaxErg").html(data);
+        }
+        else if (data.startsWith("Problem")) {
           $("#ajaxErg").html(data);
         }
         else {
+          //API sendet das angelegte Element zurück
           newData = JSON.parse(data);
-          console.log(newData);
-          var funcname = "prepend_"+newData.entityName;
-          myFunc = window[funcname];
-          myFunc(newData);
+          className = 'My' + newData.entityName.charAt(0).toUpperCase() + newData.entityName.slice(1);
+          if (window[className]) {
+            window[className].prepend(newData);
+            console.log(className + " angelegt");
+          }
+          else {
+            funcname = "prepend_"+newData.entityName;
+            //Passende Funktion zum anzeigen der neuen Daten aufrufen
+            //Funktionsname enthält den entityName
+            console.log(funcname);
+            myFunc = window[funcname];
+            myFunc(newData);
+          }
         }
       });
     });
@@ -406,23 +425,47 @@
       $("#inhalt").css('height', '48px');
     });
 
-
     function getdata(t) {
       if (localStorage['mypw'] === undefined) {
         alert('Passwort fehlt !');
         return;
       }
+      //passende API URL bilden
       url = '/localphp/show.php?table=' + t + '&auth=';
       url += localStorage['mypw'] + '//' + localStorage['myuser'];
 
-      if (t === 'buch') {
+      //Klassennamen erzeugen
+      var className = "My" + t.charAt(0).toUpperCase() + t.slice(1);
+
+      if (window[className]) {
+        //Klasse bekannt ? Dann load-Methode aufrufen.
+        window[className].load(url);
+        console.log(className + " load wird aufgerufen");
+      }
+      else if (t === 'buch') {
         // using fetch API ??
         loadBooks(url);
       }
       else if (t === 'snippet') {
         loadSnippets(url);  //Laden über fetch !!
       }
-      else {
+      else if (t === 'chat') {
+        loadChat(url);  //Laden über fetch !!
+      }
+      else if (t === 'notiz') {
+        MyNotiz.load(url);
+        //loadNotiz(url);  //Laden über fetch !!
+      }
+      else if (t === 'zitat') {
+        loadZitat(url);
+      }
+      else if (t === 'link') {
+        MyLink.load(url);
+      }
+      else if (t === 'link2') {
+        MyLink2.load(url);
+      }
+      else {  //Über altes AJAX laden
         var posting = $.get(url);
         posting.done(function (data) {
           $("#DBinhalt").html(data);

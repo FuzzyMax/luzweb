@@ -62,7 +62,7 @@ switch ($table) {
         showSnippet();
         break;
     case 'notizen':
-        showNotiz();
+        showNotiz($nic);
         break;
     case 'chat':
         showChat($nic);
@@ -73,7 +73,7 @@ switch ($table) {
 
 function showBooks()
 {
-    $sql = 'SELECT * FROM books ORDER BY b_id DESC';
+    $sql = 'SELECT * FROM books WHERE deleted = false ORDER BY b_id DESC';
     $result = $GLOBALS['u']->dbSelArray($sql);
     echo json_encode($result);
 }
@@ -83,8 +83,11 @@ function showZitate()
     $sql = 'SELECT z_id, z_quelle, z_inhalt, z_seite, b_titel, b_author
             FROM zitate
             LEFT JOIN books ON z_quelle = b_isbn
+            WHERE zitate.deleted = false
             ORDER BY b_id DESC, z_quelle, z_id;';
     $result = $GLOBALS['u']->dbSelArray($sql);
+    echo json_encode($result);
+    return;
     foreach ($result as $res) {
         #$res['z_inhalt'] = nl2br($res['z_inhalt']);
         if ($res['b_titel']) {
@@ -100,8 +103,10 @@ function showZitate()
 
 function showMerkzettel()
 {
-    $sql = 'SELECT * FROM merkzettel ORDER BY mz_id DESC;';
+    $sql = 'SELECT * FROM merkzettel WHERE deleted = false ORDER BY mz_id DESC;';
     $result = $GLOBALS['u']->dbSelArray($sql);
+    echo json_encode($result);
+    return;
     foreach ($result as $res) {
         if (substr($res['mz_txt'], 0, 7) == 'http://' or substr($res['mz_txt'], 0, 8) == 'https://') {
             echo "<a href='{$res['mz_txt']}' target='_blank'>{$res['mz_short']}</a><hr>";
@@ -113,8 +118,10 @@ function showMerkzettel()
 
 function showNina()
 {
-    $sql = 'SELECT * FROM nina ORDER BY n_id DESC;';
+    $sql = 'SELECT * FROM nina WHERE deleted = false ORDER BY n_id DESC;';
     $result = $GLOBALS['u']->dbSelArray($sql);
+    echo json_encode($result);
+    return;
     foreach ($result as $res) {
         if (substr($res['n_txt'], 0, 7) == 'http://' or substr($res['n_txt'], 0, 8) == 'https://') {
             echo "<a href='{$res['n_txt']}' target='_blank'>{$res['n_short']}</a><hr>";
@@ -126,15 +133,21 @@ function showNina()
 
 function showSnippet()
 {
-    $sql = 'SELECT * FROM snippets ORDER BY s_id DESC;';
+    $sql = 'SELECT * FROM snippets WHERE deleted = false ORDER BY s_id DESC;';
     $result = $GLOBALS['u']->dbSelArray($sql);
     echo json_encode($result);
 }
 
-function showNotiz()
+function showNotiz($nic)
 {
-    $sql = 'SELECT * FROM notizen ORDER BY notiz_id DESC;';
+
+    $sql = "SELECT * FROM notizen 
+            WHERE (nic = '$nic' OR nic = 'ALL')
+            AND deleted = false 
+            ORDER BY notiz_id DESC;";
     $result = $GLOBALS['u']->dbSelArray($sql);
+    echo json_encode($result);
+    return;
     foreach ($result as $res) {
         echo "<strong>{$res['notiz_kopf']}<strong><br><textarea onchange='chgnotiz(\"{$res['notiz_id']}\",this.value);'>{$res['notiz_inhalt']}</textarea><br>";
     }
@@ -144,10 +157,14 @@ function showChat($nic)
 {
     require_once('entity.db.php');
     $e = new entity($GLOBALS['u'], 'chat');
-    $e->set_fieldlist(array('creator_nic','content'));
-    $where = " target = 'all' or target = '$nic' ";
+    $e->set_fieldlist(array('creator_nic','content', 'id', 'target'));
+    $where = " (target = 'all' or target = ? or creator_nic = ?) and deleted = false  ";
+    $data[] = $nic;
+    $data[] = $nic;
     $e->set_orderby('id');
-    $result = $e->get_list($where);
+    $result = $e->get_list($where, $data);
+    echo json_encode($result);
+    die();
 
     echo '<div>';
     foreach ($result as $res) {

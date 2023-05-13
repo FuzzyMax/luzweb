@@ -5,14 +5,14 @@ textarea {
 }
 
 .chatfrom {
-  color: red;
+  color: darkred;
   text-decoration: underline;
   font-size: smaller;
   font-weight: 200;
 }
 
 .chat {
-  color: aqua;
+  color: navy;
   font-size:medium;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
