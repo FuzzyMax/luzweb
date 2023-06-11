@@ -1,4 +1,18 @@
 <?php
+ini_set('session.cookie_secure', "1");
+ini_set('session.cookie_httponly', "1");
+ini_set('session.cookie_samesite','None');
+define('PROGNAME','LUZWEB');
+define('DOCROOT',$_SERVER['DOCUMENT_ROOT']);
+define('INCL',DOCROOT.DIRECTORY_SEPARATOR.'in'.DIRECTORY_SEPARATOR);
+set_include_path(get_include_path() . PATH_SEPARATOR . INCL);
+$tables = array(
+	'buch' => 'books', 'zitat' => 'zitate', 'link' => 'merkzettel',
+	'link2' => 'nina', 'notiz' => 'notizen', 'snippet' => 'snippets',
+    'chat' => 'chat'
+);
+require_once('../in/user.php');
+
 if (!defined('PROGNAME')) {
 	die('DEPRECATED');
 }
@@ -9,6 +23,9 @@ define('CRYPT_BASICKEY', 'MaXFuZZy.§&');
 
 if (APPSTATUS === 'PROD') {
     ini_set('display_errors', '0');
+}
+else {
+    ini_set('display_errors', '1');
 }
 header("Content-Type: text/html; charset=utf-8");
 
